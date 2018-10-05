@@ -47,7 +47,9 @@ export class AppComponent {
 
   //View Category
   openCategory(category) {
+    alert(category.url)
                this.selectedCategory = category;
+               alert(this.selectedCategory .url)
                this.categoriesId = 1;
               }
 

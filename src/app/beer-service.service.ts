@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 
@@ -10,7 +10,7 @@ const appURL ="http://apichallenge.canpango.com";
 @Injectable()
 export class BeerServiceService {
   //Observable streams
-  emitChangeSource = new ReplaySubject<any>(1);;
+  emitChangeSource = new Subject<any>();
   sourceBears$ = this.emitChangeSource.asObservable()
 
  //Constractor

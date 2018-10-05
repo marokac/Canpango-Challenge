@@ -31,7 +31,7 @@ export class ViewCategoryComponent implements OnInit {
                       this.pageId = -1;
                       //Subscribe to change in observable stream
                       this.Service.sourceBears$.subscribe(res => {
-                        this.pageId = 0;
+                       // this.pageId = 0;
                         //Handle the response
                         this.buildResponse(res);
                       }, err => {
@@ -47,12 +47,12 @@ export class ViewCategoryComponent implements OnInit {
     this.Service.getBearByCategory();
   }
 
-  buildResponse(data) {
+  buildResponse(response) {
     //clear data
     this.beerData = [];
-    console.log(this.beerData)
+    console.log( response.res)
     //format response  Data
-    data.res.forEach(element => {
+    response.res.forEach(element => {
           this.beerData.push({
                         abv: element.abv,
                         brewery_location: element.brewery_location,
@@ -69,11 +69,11 @@ export class ViewCategoryComponent implements OnInit {
     this.beerForCatecory = this.beerData.filter(category => category.category == this.data.url);
 
     console.log(this.beerForCatecory);
-    if (this.beerForCatecory && this.beerForCatecory.length == 0 && !data.isSearch) {
+    if (this.beerForCatecory && this.beerForCatecory.length == 0 && !response.isSearch) {
       //No data found for this particular Category
        this.pageId = 1;
     }
-    else if (this.beerForCatecory && this.beerForCatecory.length == 0 && data.isSearch) {
+    else if (this.beerForCatecory && this.beerForCatecory.length == 0 && response.isSearch) {
       //No search resul found for this category
         this.pageId = 6;
     }
