@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-6 col-xs-12">
+      <h2>Add New Item</h2>
+    </div>
+  </div>
+  <div class="container centerA">
+
+<div class="form">
+  <div  *ngIf="pageId==0">
+  <form [formGroup]="setupForm">
+    <label>Item Name:</label>
+    <input type="text" formControlName="name">
+    <label>Item ibu:</label>
+    <input type="number" formControlName="ibu">
+    <label>Item calories:</label>
+    <input type="number" formControlName="calories">
+    <label>Item abv:</label>
+    <input type="number" formControlName="abv">
+    <label>style:</label>
+    <input type="text" formControlName="style">
+    <label>brewery location:</label>
+    <input type="text" formControlName="brewery_location">
+    <label>category:</label>
+    <select (click)="keyUpEvent($event)" formControlName="category">
+      <option style="display:none">select a category</option>
+      <option *ngFor="let opt of DropdownOptions" value="{{opt.url}}">{{opt.url}}</option>
+    </select>
+
+    <input (click)="submit()" type="submit" value="submit">
+  </form>
+</div>
+  <div *ngIf="pageId==1">
+      <div class="addSuccess">
+        <p>Item Added Successfully</p>
+        <button (click)="close()">Close</button>
+      </div>
+    </div>
+
+</div>
+</div>

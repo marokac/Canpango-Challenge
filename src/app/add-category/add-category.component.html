@@ -1,0 +1,23 @@
+<div *ngIf="pageId!==1" class="row">
+  <div class="col-6 col-xs-12">
+    <h2>Create New Category</h2>
+  </div>
+</div>
+<div class="container centerA">
+
+  <div class="form">
+    <div *ngIf="pageId==0;">
+      <form [formGroup]="setupForm">
+        <label>Item Name:</label>
+        <input type="text" formControlName="name">
+        <input (click)="submit()" type="submit" value="submit">
+      </form>
+    </div>
+    <div *ngIf="pageId==1">
+      <div class="addSuccess">
+        <p>Item Added Successfully</p>
+        <button (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

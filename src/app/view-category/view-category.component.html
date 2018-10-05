@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="title">
+    <ul>
+      <li>
+        <h2>{{data.name}}</h2>
+      </li>
+      <li Style="float: right"><input (click)="submitForm()"type="submit" value="Search" /> </li>
+      <li Style="float: right">
+        <form [formGroup]="setupForm">
+          <input (keyup)="onKey($event)" (valueChanged)="searchChange($event)" formControlName="search" type="text" placeholder="Search Items" />
+        </form>
+      </li>
+    </ul>
+
+  </div>
+</div>
+<div class="container">
+  <div *ngIf="pageId==0">
+    <div class="row">
+      <div class="col-lg-12" *ngFor="let Cdata of beerForCatecory">
+        <div class="cart" (click)="openCategory(data)">
+          <p>{{Cdata.abv}}</p>
+          <p>{{Cdata.name}}</p>
+          <button (click)="viewItem(Cdata)">View Item</button>
+        </div>
+        <br>
+
+      </div>
+    </div>
+  </div>
+  <div *ngIf="pageId==1">
+    <div class="errorBlock">
+      <p>You don't have Items in This Category, Please add Items below</p>
+      <button (click)="gotoAdd()">Add Item</button>
+    </div>
+  </div>
+
+  <div class="netWorkError" *ngIf="pageId==3">
+    <h4>Error (:</h4>
+    <p>Please check your network connection and reload the page</p>
+  </div>
+  <div class="SearcErr" *ngIf="pageId==6">
+      <h4>Sorry :)</h4>
+      <p>No result found for your Search Creteria</p>
+      <p>Place change your search Creteria.</p>
+    </div>
+  <div class="loading" *ngIf="pageId==-1">
+    <h4>Loading...</h4>
+  </div>
+
+</div>

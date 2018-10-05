@@ -1,0 +1,9 @@
+{
+    "/categories": {
+        "target": "http://apichallenge.canpango.com",
+        "changeOrigin": true,
+        "secure": false,
+        "logLevel": "debug"
+    }
+    
+}
