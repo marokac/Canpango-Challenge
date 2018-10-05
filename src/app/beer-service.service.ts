@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Subject } from 'rxjs/Subject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 
@@ -10,7 +10,7 @@ const appURL ="http://apichallenge.canpango.com";
 @Injectable()
 export class BeerServiceService {
   //Observable streams
-  emitChangeSource = new Subject<any>();
+  emitChangeSource = new ReplaySubject<any>(1);;
   sourceBears$ = this.emitChangeSource.asObservable()
 
  //Constractor
@@ -41,7 +41,7 @@ getBearByCategory(){
 
             }).subscribe((res) => {
 
-              this.builtResponse(res);
+              this.builtResponse(res,false);
 
             },err=>{
 
@@ -59,7 +59,7 @@ searchItems(serchString){
 
             }).subscribe(res=>{
 
-                  this.builtResponse(res)
+                  this.builtResponse(res,true);
 
             },err=>{
 
@@ -91,10 +91,10 @@ CreateCategory(data){
 }
 
 //handle the response
-builtResponse(res){
+builtResponse(res,isSearch){
         console.log('res')
         // forward Response to Observable stream;
-        this.emitChangeSource.next(res);
+        this.emitChangeSource.next({res:res,isSearch:isSearch});
 
         return res;
       }

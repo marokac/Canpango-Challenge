@@ -18,7 +18,6 @@ export class ViewCategoryComponent implements OnInit {
   beerData = [];
   beerForCatecory: any;
   pageId = -1;
-  userIsSerching: any;
   setupForm: any;
 
   //constractor
@@ -48,12 +47,12 @@ export class ViewCategoryComponent implements OnInit {
     this.Service.getBearByCategory();
   }
 
-  buildResponse(res) {
+  buildResponse(data) {
     //clear data
     this.beerData = [];
     console.log(this.beerData)
     //format response  Data
-    res.forEach(element => {
+    data.res.forEach(element => {
           this.beerData.push({
                         abv: element.abv,
                         brewery_location: element.brewery_location,
@@ -70,13 +69,16 @@ export class ViewCategoryComponent implements OnInit {
     this.beerForCatecory = this.beerData.filter(category => category.category == this.data.url);
 
     console.log(this.beerForCatecory);
-    if (this.beerForCatecory && this.beerForCatecory.length == 0 && !this.userIsSerching) {
+    if (this.beerForCatecory && this.beerForCatecory.length == 0 && !data.isSearch) {
       //No data found for this particular Category
        this.pageId = 1;
     }
-    else if (this.beerForCatecory && this.beerForCatecory.length == 0 && this.userIsSerching) {
+    else if (this.beerForCatecory && this.beerForCatecory.length == 0 && data.isSearch) {
       //No search resul found for this category
         this.pageId = 6;
+    }
+    else{
+      this.pageId = 0;
     }
   }
 
@@ -104,12 +106,10 @@ export class ViewCategoryComponent implements OnInit {
 
   //keup event(Search on key Up);
   onKey(e) {
-    this.userIsSerching = true;
     this.submitForm();
   }
   //On Value change event
   searchChange() {
-    this.userIsSerching = true;
     document.dispatchEvent(new Event('click'));
   }
 //go to add Items
