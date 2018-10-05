@@ -8,67 +8,85 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./view-category.component.css']
 })
 export class ViewCategoryComponent implements OnInit {
+
+  //input data
   @Input() data: any;
+  //Event emmitor
   @Output() viewBeerEvent = new EventEmitter<any>();
+
+  //Virabels
   beerData = [];
   beerForCatecory: any;
   pageId = -1;
   userIsSerching: any;
   setupForm: any;
+
+  //constractor
   constructor(private formBuilder: FormBuilder, private Service: BeerServiceService) {
+    //subscribe to change
     this.sucribtionManager();
   }
 
-  sucribtionManager() {
-    this.pageId = -1;
-    this.Service.sourceBears$.subscribe(res => {
-      this.pageId = 0;
-      this.buildResponse(res);
-    }, err => {
-      this.pageId = 3;
-    })
 
-  }
+  sucribtionManager() {
+                      this.pageId = -1;
+                      //Subscribe to change in observable stream
+                      this.Service.sourceBears$.subscribe(res => {
+                        this.pageId = 0;
+                        //Handle the response
+                        this.buildResponse(res);
+                      }, err => {
+                         //Handle error
+                        this.pageId = 3;
+                  });
+}
+
   ngOnInit() {
+    //build form
     this.buildForm()
+    //invoke get bears service call
     this.Service.getBearByCategory();
   }
 
   buildResponse(res) {
-
+    //clear data
     this.beerData = [];
-
     console.log(this.beerData)
-
+    //format response  Data
     res.forEach(element => {
-      this.beerData.push({
-        abv: element.abv,
-        brewery_location: element.brewery_location,
-        calories: element.calories,
-        category: element.category,
-        created_on: element.created_on,
-        ibu: element.ibu,
-        name: element.name,
-        style: element.style,
-        url: element.url
-      })
-
-    });
+          this.beerData.push({
+                        abv: element.abv,
+                        brewery_location: element.brewery_location,
+                        calories: element.calories,
+                        category: element.category,
+                        created_on: element.created_on,
+                        ibu: element.ibu,
+                        name: element.name,
+                        style: element.style,
+                        url: element.url
+                  });
+          });
+    //Filter by category
     this.beerForCatecory = this.beerData.filter(category => category.category == this.data.url);
 
     console.log(this.beerForCatecory);
     if (this.beerForCatecory && this.beerForCatecory.length == 0 && !this.userIsSerching) {
-      this.pageId = 1;
+      //No data found for this particular Category
+       this.pageId = 1;
     }
     else if (this.beerForCatecory && this.beerForCatecory.length == 0 && this.userIsSerching) {
-      this.pageId = 6;
+      //No search resul found for this category
+        this.pageId = 6;
     }
   }
 
+  //View Item 
   viewItem(data) {
+    //emit data to parent component
     this.viewBeerEvent.next({ data: data, id: 3 });
   }
 
+  //saerch form
   buildForm() {
     this.formBuilder = new FormBuilder();
     this.setupForm = this.formBuilder.group({
@@ -76,7 +94,7 @@ export class ViewCategoryComponent implements OnInit {
     })
 
   }
-
+// form submit clicked
   submitForm() {
     if (this.setupForm.controls["search"].value !== "")
       this.Service.searchItems(this.setupForm.controls["search"].value)
@@ -84,15 +102,17 @@ export class ViewCategoryComponent implements OnInit {
       this.Service.getBearByCategory();
   }
 
+  //keup event(Search on key Up);
   onKey(e) {
     this.userIsSerching = true;
     this.submitForm();
   }
+  //On Value change event
   searchChange() {
     this.userIsSerching = true;
     document.dispatchEvent(new Event('click'));
   }
-
+//go to add Items
   gotoAdd(){
     this.viewBeerEvent.next({id:5});
   }

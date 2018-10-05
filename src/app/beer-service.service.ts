@@ -4,78 +4,99 @@ import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
+
+//Searvice URL
 const appURL ="http://apichallenge.canpango.com";
 @Injectable()
 export class BeerServiceService {
-searchData=[];
-
+  //Observable streams
   emitChangeSource = new Subject<any>();
   sourceBears$ = this.emitChangeSource.asObservable()
+
+ //Constractor
   constructor(private http: Http,) { }
 
+//////////////////////////// Service calls///////////////////////////////////
+// Get categories service call
 getBearCategories(){
-  
-return this.http.get(appURL+"/categories").map((result: Response) => {
-var response=result.json();
-return response;
-}).catch((err) => {
-  return Observable.throw(err);
-})}
+     
+          return this.http.get(appURL+"/categories").map((result: Response) => {
+                   var response=result.json();
+                   return response;
 
+                }).catch((err) => {
+                  return Observable.throw(err);
+                })
+          }
+
+ //Get Beers Service call         
 getBearByCategory(){
-  console.log('ffff')
-  const url=appURL+"/beers/";
-  return this.http.get(url).map((res:Response)=>{
-    var response=res.json();
-    return response;
-  }).subscribe((res) => {
-    this.builtResponse(res);
-  },err=>{
-    this.emitChangeSource.error(err); 
-  })
+
+            const url=appURL+"/beers/";
+
+            return  this.http.get(url).map((res:Response)=>{
+
+                    var response=res.json();
+                    return response;
+
+            }).subscribe((res) => {
+
+              this.builtResponse(res);
+
+            },err=>{
+
+              this.emitChangeSource.error(err); 
+            })
 }
 
+// Serach Items Service call
 searchItems(serchString){
 
- const url=appURL+"/beers/search/";
- return this.http.get( url, { params: {q: serchString}}).map((res)=>{
-  return res.json();
- }).subscribe(res=>{
-  this.builtResponse(res)
-},err=>{
-  this.emitChangeSource.error(err); 
-})
+            const url=appURL+"/beers/search/";
+
+            return this.http.get( url, { params: {q: serchString}}).map((res)=>{
+                        return res.json();
+
+            }).subscribe(res=>{
+
+                  this.builtResponse(res)
+
+            },err=>{
+
+              this.emitChangeSource.error(err); 
+            });
 }
 
+// Add Items Call
 addItems(data){
-  const url=appURL+"/beers/";
-  return this.http.post(url,data).map((res:Response)=>{
-    return res.json();
-  })
+
+            const url=appURL+"/beers/";
+
+            return this.http.post(url,data).map((res:Response)=>{
+
+              return res.json();
+
+            });
 }
 
+// Create category 
 CreateCategory(data){
-  const url=appURL+"/categories/";
-  return this.http.post(url,data).map((res:Response)=>{
-    return res.json();
-  })
-}
-buildResponse(response,url){
 
-response.forEach(element => {
-  if(element.category==url){
-    this.searchData.push(element);
-  }
-  
-});
-return this.searchData;
+              const url=appURL+"/categories/";
+
+              return this.http.post(url,data).map((res:Response)=>{
+                
+                return res.json();
+              });
 }
 
-
+//handle the response
 builtResponse(res){
-  console.log('res')
-  this.emitChangeSource.next(res);
-  return res;
-}
+        console.log('res')
+        // forward Response to Observable stream;
+        this.emitChangeSource.next(res);
+
+        return res;
+      }
 
 }

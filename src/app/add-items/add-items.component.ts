@@ -8,42 +8,58 @@ import { BeerServiceService } from '../beer-service.service';
   styleUrls: ['./add-items.component.css']
 })
 export class AddItemsComponent implements OnInit {
+  // Virables
   setupForm: any;
   DropdownOptions = [];
   validationMessages: object = {};
   pageId: any;
-  @Input() data: any;
-  @Output() addItemEvent = new EventEmitter<any>();
-  constructor(private formBuilder: FormBuilder, private Service: BeerServiceService) { 
 
+  //Input data
+  @Input() data: any;
+  //EventEmitter
+  @Output() addItemEvent = new EventEmitter<any>();
+
+//constractor
+  constructor(private formBuilder: FormBuilder, private Service: BeerServiceService) { 
+//Validation massages
     this.validationMessages = {
-      'name':{'required':"Item name is required"},
-      'ibu':{'required':"Ibu number is required",'maxlength':"leng"},
-      'calories': {'required':"calories number is Required",'maxlength':"leng"},
-      'abv': {'required':"abv number is required",'maxlength':"leng"},
-      'style': {'required':"Style is required"},
-      'brewery_location':{'required':"Brewery Location is required"},
-      'category':{'required':"Category must be selected"}
-    }
-  }
+                            'name':{'required':"Item name is required"},
+                            'ibu':{'required':"Ibu number is required",'maxlength':"leng"},
+                            'calories': {'required':"calories number is Required",'maxlength':"leng"},
+                            'abv': {'required':"abv number is required",'maxlength':"leng"},
+                            'style': {'required':"Style is required"},
+                            'brewery_location':{'required':"Brewery Location is required"},
+                            'category':{'required':"Category must be selected"}
+                          }
+                }
 
   ngOnInit() {
-    this.pageId = 0;
-    this.buildForm();
-    if (this.data) {
-      this.DropdownOptions = this.data.url;
-    }
-    this.Service.getBearCategories().subscribe(res => {
-      res.forEach(el => {
-        this.DropdownOptions.push({ url: el.url });
-      });
-    }, err => {
-      console.log(err)
-    })
+            this.pageId = 0;
+
+            this.buildForm();
+            //Push data to dropDown list
+            if (this.data) {
+              this.DropdownOptions = this.data.url;
+            }
+
+           //Get Dropdown data from the server
+            this.Service.getBearCategories().subscribe(res => {
+                                                  res.forEach(el => {
+                                                    //add data in to the dropdown list
+                                                    this.DropdownOptions.push({ url: el.url });
+                                                  });
+                                            },
+                                         err => {
+                                                  console.log(err)
+                                          });
   }
+
+
   keyUpEvent() {
     console.log('dd');
   }
+
+  //Create add Item form
   buildForm() {
     this.formBuilder = new FormBuilder();
     this.setupForm = this.formBuilder.group({
@@ -59,15 +75,22 @@ export class AddItemsComponent implements OnInit {
     this.doValidation();
 
   }
+
+  //valueChage Event
   onValueChanged(){
     this.doValidation();
   }
+
+
   submit() {
     console.log(this.setupForm,this.formStatus);
+    //do validations
     this.doValidation();
-    this.markAllAsDirty()
+    this.markAllAsDirty();
     this.formStatus.submitClicked = true;
+
     if (this.setupForm.valid) {
+      //invoke add Items service call
       this.Service.addItems(this.setupForm.value).subscribe(res => {
         this.pageId = 1;
         console.log(res);
@@ -75,11 +98,13 @@ export class AddItemsComponent implements OnInit {
     }
 
   }
+  //close utton clicked
   close() {
+    //emit event to parent component
     this.addItemEvent.next({ id: 1 });
   }
 
-
+  //form status objects
   formStatus = {
     formErrors: {
       'name':'',
@@ -93,6 +118,7 @@ export class AddItemsComponent implements OnInit {
     submitClicked: false
   };
 
+  //Validate the form
   private doValidation() {
     if (!this.setupForm) { return; } // Return if no form
     // for each field in formErrors check if associated control have errors and update formErrors with those.
@@ -113,15 +139,17 @@ export class AddItemsComponent implements OnInit {
     }
   }
 
- 
+ // mark form as Dirty
   markAllAsDirty() {
       // Mark fields as dirty to trigger validation
       for (const key in this.setupForm.controls) {
           this.setupForm.controls[key].markAsDirty()
       }
+      //do validation
     this.doValidation();
   }
 
+  //validate numbers
   validateNumber() {
     return (control: AbstractControl) => {
       const number = control.value; 
