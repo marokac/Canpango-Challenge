@@ -63,3 +63,7 @@ h2{
     border-radius: 4px;
     cursor: pointer;
 }
+.validate{
+    margin-top:-5;
+    color:red;
+}
