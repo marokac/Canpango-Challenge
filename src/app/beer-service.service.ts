@@ -90,6 +90,11 @@ CreateCategory(data){
               });
 }
 
+deleteItem(url){
+return this.http.delete(url).map((res :Response)=>{
+  return res.json();
+})
+}
 //handle the response
 builtResponse(res,isSearch){
         console.log('res')

@@ -36,6 +36,6 @@
 
   <app-view-category (viewBeerEvent)="viewBearDetails($event)" [data]="selectedCategory" *ngIf="categoriesId==1"></app-view-category>
   <app-view-bear (viewBeerEvent)="viewBearDetails($event)" [data]="selectedItemData" *ngIf="categoriesId==3"></app-view-bear>
-  <app-add-items (addItemEvent)="viewBearDetails($event)" *ngIf="categoriesId==5"></app-add-items>
+  <app-add-items (addItemEvent)="viewBearDetails($event)" [data]="selectedItemData" *ngIf="categoriesId==5"></app-add-items>
   <app-add-category (addItemEvent)="viewBearDetails($event)" *ngIf="categoriesId==6"></app-add-category>
 </div>

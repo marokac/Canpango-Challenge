@@ -16,21 +16,8 @@ export class AppComponent {
   //constructor method
   constructor(private Service: BeerServiceService) {
               this.categoriesId=-1;
-
-  //Subscribing to service call
-      this.Service.getBearCategories().subscribe(res => {
-
-                          this.categoriesId=0;
-                         // Build the categories data
-                          this.buildcategory(res);
-
-                          console.log(res);
-                
-                        },err=>{
-                          // Show error panel
-                              console.log(err)
-                              this.categoriesId=4;
-                        })
+              this.getCategories();
+ 
 
   }
 
@@ -38,6 +25,22 @@ export class AppComponent {
     //this.categoriesId = 0;
   }
 
+  getCategories(){
+     //Subscribing to service call
+     this.Service.getBearCategories().subscribe(res => {
+
+      this.categoriesId=0;
+     // Build the categories data
+      this.buildcategory(res);
+
+      console.log(res);
+
+    },err=>{
+      // Show error panel
+          console.log(err)
+          this.categoriesId=4;
+    })
+  }
   // Format categories data
   buildcategory(response) {
                 response.forEach(category => {
@@ -58,6 +61,7 @@ export class AppComponent {
     switch(e.id){
       case 0:
             this.categoriesId = 0;
+            this.getCategories();
             break;
       case 1:
             this.categoriesId = 1;
@@ -67,6 +71,7 @@ export class AppComponent {
               this.categoriesId = 3;
               break;
       case 5: 
+              this.selectedItemData=e.data;
               this.categoriesId = 5;
               break;
      default:{

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { BeerServiceService } from '../beer-service.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class ViewBearComponent implements OnInit {
   @Output() viewBeerEvent = new EventEmitter<any>()
 
   //Constructor
-  constructor() { }
+  constructor(private Service: BeerServiceService) { }
 
   ngOnInit() {
     console.log(this.data)
@@ -22,4 +23,5 @@ export class ViewBearComponent implements OnInit {
   goHome() {
     this.viewBeerEvent.next({ id: 1 });
   }
+ 
 }

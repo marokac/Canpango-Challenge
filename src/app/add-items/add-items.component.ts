@@ -37,11 +37,7 @@ export class AddItemsComponent implements OnInit {
             this.pageId = 0;
 
             this.buildForm();
-            //Push data to dropDown list
-            if (this.data) {
-              this.DropdownOptions = this.data.url;
-            }
-
+           
            //Get Dropdown data from the server
             this.Service.getBearCategories().subscribe(res => {
                                                   res.forEach(el => {
@@ -69,7 +65,7 @@ export class AddItemsComponent implements OnInit {
       abv: new FormControl('', { validators: [Validators.required,this.validateNumber()], updateOn: 'blur' }),
       style: new FormControl('', { validators: [Validators.required,], updateOn: 'blur' }),
       brewery_location: new FormControl('', { validators: [Validators.required], updateOn: 'blur' }),
-      category: new FormControl('', { validators: [Validators.required], updateOn: 'blur' }),
+      category: new FormControl(this.data? this.data.url:'', { validators: [Validators.required], updateOn: 'blur' }),
     });
     this.setupForm.statusChanges.subscribe(data => this.doValidation());
     this.doValidation();

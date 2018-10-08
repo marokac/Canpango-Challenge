@@ -40,6 +40,15 @@ export class ViewCategoryComponent implements OnInit {
                   });
 }
 
+Delete(value){
+  this.Service.deleteItem(value.url).subscribe(res=>{
+    setTimeout(()=>{
+      this.pageId = -1;
+      this.Service.getBearByCategory();
+    })
+  });
+ 
+}
   ngOnInit() {
     //build form
     this.buildForm()
@@ -98,23 +107,28 @@ export class ViewCategoryComponent implements OnInit {
   }
 // form submit clicked
   submitForm() {
-    if (this.setupForm.controls["search"].value !== "")
+    if (this.setupForm.controls["search"].value.trim() !== " "){
+    alert("vvv");
       this.Service.searchItems(this.setupForm.controls["search"].value)
-    else
+    }
+    else{
       this.Service.getBearByCategory();
+    }
   }
 
   //keup event(Search on key Up);
   onKey(e) {
     this.submitForm();
+    document.dispatchEvent(new Event('click'));
   }
   //On Value change event
   searchChange() {
+    
     document.dispatchEvent(new Event('click'));
   }
 //go to add Items
   gotoAdd(){
-    this.viewBeerEvent.next({id:5});
+    this.viewBeerEvent.next({data:this.data,id:5});
   }
 
 }

@@ -18,10 +18,11 @@
   <div *ngIf="pageId==0">
     <div class="row">
       <div class="col-lg-12" *ngFor="let Cdata of beerForCatecory">
-        <div class="cart" (click)="openCategory(data)">
+        <div class="cart">
           <p>{{Cdata.abv}}</p>
           <p>{{Cdata.name}}</p>
           <button (click)="viewItem(Cdata)">View Item</button>
+          <button (click)="Delete(Cdata)">Delete</button>
         </div>
         <br>
       </div>
