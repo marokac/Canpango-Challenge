@@ -9,6 +9,7 @@ import { ViewCategoryComponent } from './view-category/view-category.component';
 import { ViewBearComponent } from './view-bear/view-bear.component';
 import { AddItemsComponent } from './add-items/add-items.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
+import { DeshbordComponent } from './deshbord/deshbord.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AddCategoryComponent } from './add-category/add-category.component';
     ViewCategoryComponent,
     ViewBearComponent,
     AddItemsComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    DeshbordComponent
   ],
   imports: [
     BrowserModule,
