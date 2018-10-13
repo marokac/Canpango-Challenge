@@ -6,21 +6,15 @@
       </div>
       <div class="px-3">
         <ul class="d-flex pl-2 flex-items-center text-bold list-style-none">
-          <li>name</li>
-          <li>surname</li>
-          <li>surname</li>
-          <li>surname</li>
-          <li>surname</li>
+        <li *ngFor="let manu of manu">{{manu.value}}</li>
         </ul>
       </div>
       <div class="px-3">
         <input type=text>
       </div>
-
       <div class="d-flex flex-auto" style="float:right ;padding-left: 35%;">
         <ul class=" d-flex pl-2 flex-items-center text-bold list-style-none d-right">
-          <li>fgfgfg</li>
-          <li style="padding-left:-5;">fgfgfg</li>
+          <li>{{cartData.value}} [{{cartData.itemNum}}]</li>
         </ul>
       </div>
     </div>

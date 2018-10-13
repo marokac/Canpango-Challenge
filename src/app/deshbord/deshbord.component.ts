@@ -8,6 +8,8 @@ import { DOCUMENT } from '@angular/platform-browser';
 })
 export class DeshbordComponent implements OnInit {
   name:any;
+  manu=[];
+  cartData:any={itemNum:"5",value:"My Cart"};
   public fixed: boolean = false; 
 
          constructor(@Inject(DOCUMENT) private doc: Document) {}
@@ -23,6 +25,7 @@ export class DeshbordComponent implements OnInit {
           }
   ngOnInit() {
     this.name="Cedric";
+    this.manu.push({value:"surname"},{value:"surname"},{value:"surname"},{value:"surname"})
   }
 
 }
