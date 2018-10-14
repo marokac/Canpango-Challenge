@@ -3,28 +3,49 @@
     <div class="container-fluid">
       <div class="d-flex" fxLayout="row">
 
-        <div fxLayout.xs="column" fxLayout.sm="column" style="border:1px solid white" fxFlex="70%" fxLayoutGap.xs="1">
+        <div fxLayout.xs="column" fxLayout.sm="column" fxFlex="70%" fxLayoutGap.xs="1">
           <div class="px-3" fxLayout.xs="column">
             <h2>Logo</h2>
           </div>
-         
-          <div class="px-3 d-flex" fxFlex="40%" style="border:1px solid white" fxLayoutAlign="end" fxLayoutAlign.sm="center"fxLayoutAlign.xs="center">
-            <input type=text>
+
+          <div class="px-3 d-flex" fxFlex="40%" fxLayoutAlign="end" fxLayoutAlign.sm="center" fxLayoutAlign.xs="center">
+            <div class="search">
+              <form [formGroup]="searchForm">
+                <input (keydown)="search($event)" type=text placeholder="search..." formControlName="search">
+                <i *ngIf="!searchBusy" class="fa fa-search"></i>
+                <i *ngIf="searchBusy" (click)="clearSerch()" class="fa fa fa-times"></i>
+              </form>
+            </div>
           </div>
-          <div class="px-3 " fxFlex="50%" style="border:1px solid white" fxLayoutAlign="start" fxShow="true" fxHide.sm="true" fxHide.xs="true">
-            <ul class="d-flex pl-2 flex-items-center text-bold list-style-none">
+          <div class="px-3 " fxFlex="50%" fxLayoutAlign="start" fxShow="true" fxHide.sm="true" fxHide.xs="true">
+            <ul class="listItem d-flex pl-2 flex-items-center text-bold list-style-none">
               <li fxFlex="30%" *ngFor="let manu of manu">{{manu.value}}</li>
             </ul>
           </div>
         </div>
-        <div class="d-flex" fxLayoutAlign="end"fxLayoutAlign.sm="start" style="border:1px solid white" fxFlex="30%" fxLayoutGap.xs="1">
-          <ul class=" d-flex pl-2 flex-items-center text-bold list-style-none d-right">
-            <li>{{cartData.value}} [{{cartData.itemNum}}]</li>
-          </ul>
-          <div fxShow="false" fxShow.xs="true" fxShow.sm="true">
-            <ul  class=" d-flex pl-2 flex-items-center text-bold list-style-none d-right">
-              <li><i class="fas fa-align-justify"></i></li>
+        <div class="d-flex" fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.sm="start" fxFlex="30%" fxLayoutGap.xs="1">
+          <div class="cart" fxLayoutAlign="start" fxShow="true" fxShow.xs="false" fxShow.sm="false">
+            <ul style="border:1px solid white; border-radius: 3px;" class=" d-flex pl-2 flex-items-center text-bold list-style-none d-right">
+              <li><i style="font-size: 28px" class="fa fa-cart-plus"></i></li>
+              <li style="font-size: 18px;padding-top:0;padding-left:0;font-style: italic">4</li>
             </ul>
+          </div>
+          <div fxShow="false" fxLayoutAlign="end" fxShow.xs="true" fxShow.sm="true">
+            <ul class=" d-flex pl-2  text-bold list-style-none d-right">
+              <li (click)="toggleManu()"><a class="btn btn-primary" href="#navigation-main" aria-label="Skip to main navigation">
+                  <i class="fa fa-bars" [hidden]="manuOpen" aria-hidden="true"></i>
+                  <i class="fa fa-times" [hidden]="!manuOpen" aria-hidden="true"></i>
+                </a></li>
+            </ul>
+          </div>
+          <div [hidden]="hideManu" fxShow.xs="true" fxShow.sm="true" class="manubar">
+            <div (click)="clicItem()" class="manu-item" flexLayout="column" fxFlex="100%" *ngFor="let manu of manu;let i=index">
+              <div flexLayout="row" fxFlex="100%">
+                <span *ngIf="i!==0" fxFlex="50">{{manu.value}}</span>
+                <span fxFlex="50" *ngIf="i==0">MyCart</span>
+                <i style="font-size: 18px;" fxFlex="50" style="margin-top:0px" fxLayoutAlign="end" *ngIf="i==0" class="fa fa-cart-plus"></i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -33,7 +54,7 @@
 </div>
 <div [class.header-Panel]="!fixed" class="flex-items-center" [class.fixed]="fixed">
   <div class="flex-items-center text-bold">
-    <h2 class="flex-items-center text-bold">Welcome back {{name}}</h2>
+    <h2 style="color:rgb(44, 41, 41)">Welcome back {{name}}</h2> 
   </div>
 
 </div>
