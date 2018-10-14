@@ -1,21 +1,32 @@
-<div class="header-Wrapper position-relative ">
+<div class="header-Wrapper position-relative">
   <div [class.Header]="!fixed" [class.Header2]="fixed">
-    <div class="d-flex flex-auto ">
-      <div class="px-3">
-        <h2>Logo</h2>
-      </div>
-      <div class="px-3">
-        <ul class="d-flex pl-2 flex-items-center text-bold list-style-none">
-        <li *ngFor="let manu of manu">{{manu.value}}</li>
-        </ul>
-      </div>
-      <div class="px-3">
-        <input type=text>
-      </div>
-      <div class="d-flex flex-auto" style="float:right ;padding-left: 35%;">
-        <ul class=" d-flex pl-2 flex-items-center text-bold list-style-none d-right">
-          <li>{{cartData.value}} [{{cartData.itemNum}}]</li>
-        </ul>
+    <div class="container-fluid">
+      <div class="d-flex" fxLayout="row">
+
+        <div fxLayout.xs="column" fxLayout.sm="column" style="border:1px solid white" fxFlex="70%" fxLayoutGap.xs="1">
+          <div class="px-3" fxLayout.xs="column">
+            <h2>Logo</h2>
+          </div>
+         
+          <div class="px-3 d-flex" fxFlex="40%" style="border:1px solid white" fxLayoutAlign="end" fxLayoutAlign.sm="center"fxLayoutAlign.xs="center">
+            <input type=text>
+          </div>
+          <div class="px-3 " fxFlex="50%" style="border:1px solid white" fxLayoutAlign="start" fxShow="true" fxHide.sm="true" fxHide.xs="true">
+            <ul class="d-flex pl-2 flex-items-center text-bold list-style-none">
+              <li fxFlex="30%" *ngFor="let manu of manu">{{manu.value}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-flex" fxLayoutAlign="end"fxLayoutAlign.sm="start" style="border:1px solid white" fxFlex="30%" fxLayoutGap.xs="1">
+          <ul class=" d-flex pl-2 flex-items-center text-bold list-style-none d-right">
+            <li>{{cartData.value}} [{{cartData.itemNum}}]</li>
+          </ul>
+          <div fxShow="false" fxShow.xs="true" fxShow.sm="true">
+            <ul  class=" d-flex pl-2 flex-items-center text-bold list-style-none d-right">
+              <li><i class="fas fa-align-justify"></i></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

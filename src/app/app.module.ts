@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
 import { BeerServiceService } from './beer-service.service';
 import { HttpModule,Http } from '@angular/http';
@@ -25,7 +25,8 @@ import { DeshbordComponent } from './deshbord/deshbord.component';
     BrowserModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   providers: [BeerServiceService],
   bootstrap: [AppComponent]

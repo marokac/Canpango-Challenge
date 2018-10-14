@@ -11,7 +11,9 @@
     opacity:1.0;
     top:0;
 }
-
+.container-fluid{
+    width: 100% !important;
+}
 .Header2 {
     z-index: 32;
     padding-top: 12px;
