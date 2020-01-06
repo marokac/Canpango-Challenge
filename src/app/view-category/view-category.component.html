@@ -7,7 +7,6 @@
       <li Style="float: right"><input (click)="submitForm()"type="submit" value="Search" /> </li>
       <li Style="float: right">
         <form [formGroup]="setupForm">
-          <input (keyup)="onKey($event)" (valueChanged)="searchChange($event)" formControlName="search" type="text" placeholder="Search Items" />
         </form>
       </li>
     </ul>
