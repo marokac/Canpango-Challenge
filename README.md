@@ -8,6 +8,7 @@
 * Go to project in Terminal or CMD and run the following commant
 ```
 npm install
-ng serve
+ng serve  
+npm start
 
 ```
